@@ -142,7 +142,19 @@ Notes, so you don't over-read the table:
 - **DuckDB** carries its own copy inside its ICU extension and ignores the system's. Its main branch has had 2026f since 29 October, and the 2.0.1 pre-release already gets all five zones I ran right (its data is newer than Vancouver's fix). The 1.5 branch's last time zone update was 2026d (22 September). `SELECT timezone('America/Havana', now());` shows what yours does.
 - **ClickHouse** uses only the copy built into its binary; its code says so, and it never opens the system's files. Updating the server's operating system won't help. Every current release branch carries 2026e, and on 13 November nobody had opened a 2026f update yet. `SELECT toTimeZone(now(), 'America/Havana');` shows what yours does.
 - **C++ (GCC)**: `std::chrono::get_tzdb()` in libstdc++ reads `/usr/share/zoneinfo/tzdata.zi` on Linux and falls back to the copy built into the library. On macOS and other non-Linux systems the default build has no system path, so it uses only the built-in copy (on Windows it first looks for `share\zoneinfo` beside the `bin` folder that holds the DLL). `std::chrono::get_tzdb().version` shows which data you got. Clang's libc++ has no built-in copy: it reads `/usr/share/zoneinfo/tzdata.zi` (read in its source on main).
-- Not checked: phones, Safari, databases other than PostgreSQL, DuckDB and ClickHouse.
+- Not checked: phones, Safari, Windows itself (read Microsoft's notes, didn't run it), databases other than PostgreSQL, DuckDB and ClickHouse.
+
+## Windows (Microsoft's own notes, read 2026-11-14)
+
+Windows doesn't use the IANA data. It has its own time zones, updated through Windows Update. This is what Microsoft's pages say; I didn't run Windows.
+
+| change | in which update | for |
+|---|---|---|
+| British Columbia and Alberta | 22 September preview (Windows 11 24H2, 25H2), 13 October security update (the rest) | Windows 11 23H2, 24H2, 25H2, 26H1; Windows 10 Enterprise LTSC 2021; Server 2016 to 2025 |
+| Manitoba, as a new "(UTC-05:00) Manitoba" zone | 13 October security update | Windows 11 23H2, 24H2, 25H2, 26H1; Windows 10 Enterprise LTSC 2021; Server 2016 to 2025 |
+| Cuba | 10 November security update (KB5132061 for Windows 11 24H2, 25H2, 26H2) | Windows 11 24H2, 25H2, 26H1, 26H2; Windows 10 Enterprise LTSC 2021; Server 2016 to 2025 |
+
+Microsoft's Alberta post lists Yellowknife and Inuvik among the places it covers. A PC that hasn't installed the November update still shows Havana an hour behind. Sources: Microsoft's [Alberta](https://techcommunity.microsoft.com/blog/dstblog/alberta-2026-time-zone-update-available-now/4564506), [Manitoba](https://techcommunity.microsoft.com/blog/dstblog/manitoba-2026-time-zone-update-available-now/4564515) and [Cuba](https://techcommunity.microsoft.com/blog/dstblog/interim-guidance-for-cuba-dst-2026/4568608) posts, and the [KB5132061 release note](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/11/kb5132061-windows-11-24h2-25h2-26h2-security-update). Programs that carry their own copy (Java, browsers, Node, Python's `tzdata`) ignore all of this; the tables above are about them.
 
 ## How I got these numbers
 
