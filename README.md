@@ -30,7 +30,7 @@ On 1 November 2026 British Columbia, Alberta, the Northwest Territories, Manitob
 
 So data from **2026e** is right for Canada and Morocco but still wrong for Cuba. You need **2026f** for all of them.
 
-One smaller change: since 2022 Moldova has changed its clocks at the EU's times (03:00 and 04:00 local), not an hour earlier as older data had it. IANA fixed this in **2026a** (March). Older data shows Europe/Chisinau an hour off only during the hour between the two changeover times, twice a year. The next one is 28 March 2027, 00:00 to 01:00 UTC. I checked it with Python's `tzdata` 2025.3 (wrong) and 2026.1 (right); it isn't in the checker.
+One smaller change: since 2022 Moldova has changed its clocks at the EU's times (03:00 and 04:00 local), not an hour earlier as older data had it. IANA fixed this in **2026a** (March). Older data shows Europe/Chisinau an hour off only during the hour between the two changeover times, twice a year. The next one is 28 March 2027, 00:00 to 01:00 UTC. I checked it with Python's `tzdata` 2025.3 (wrong) and 2026.1 (right); it isn't in the checker. Two older changes, also not in the checker: data older than 2025a shows Paraguay (America/Asuncion) an hour behind from March to October, because it stopped changing clocks in 2024; it agrees in November, so a November check won't catch it. Chile's Aysén region got its own zone, America/Coyhaique, in 2025b; older data doesn't have that name. I checked both with Python's `tzdata` 2024.2, 2025.1 and 2025.3.
 
 ## Check in ten seconds
 
