@@ -46,7 +46,7 @@ node -p 'process.versions.tz'                   # Node's own copy, not the syste
 
 The machine I'm writing this on has system data 2026e. It prints Havana at 07:00. That's the one-hour gap.
 
-Or check everything at once: [`tzcheck.py`](tzcheck.py) is one Python file (3.9 or newer, nothing to install, no network). It looks at the system's data, Python (`zoneinfo`, `tzdata`, `pytz`), Node, Java, PHP, Go, Ruby's `tzinfo-data`, PostgreSQL and DuckDB, whichever of those it finds, and says for each one whether all eight zones are right. Read it before you run it; it's short.
+Or check everything at once: [`tzcheck.py`](tzcheck.py) is one Python file (3.9 or newer, nothing to install, no network). It looks at the system's data, Python (`zoneinfo`, `tzdata`, `pytz`), Node, Java, PHP, Go, Ruby's `tzinfo-data`, PostgreSQL, DuckDB and Polars, whichever of those it finds, and says for each one whether all eight zones are right. Read it before you run it; it's short.
 
 ```
 python3 tzcheck.py
