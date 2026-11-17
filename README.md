@@ -99,7 +99,7 @@ Many tools carry their own copy of the data, so updating your operating system i
 | Android `threetenabp` (ships its own `TZDB.dat`, not threetenbp's; read it in the AAR 13 November, didn't run it) | 1.4.9 (March 2025, latest) | 2025a (its file says `2025agtz`) | all eight wrong |
 | Kotlin `kotlinx-datetime-zoneinfo` (the zone data for kotlinx-datetime on Wasm/WASI, which otherwise has only UTC; on the JVM it uses Java's data, on JS and Wasm/JS `@js-joda/timezone`, elsewhere the system's; decoded the sources jar's TZif bytes 15 November, didn't run Kotlin) | 2026f-spi.0.8.0 (30 October) | 2026f | yes |
 | Kotlin `kotlinx-datetime-zoneinfo`, newest build labelled for 0.7.x | 2026b-spi.0.7.1 (24 April) | 2026b | Vancouver right, the other seven wrong |
-| Dart `timezone` (pub.dev) | 0.11.2 | 2026e | Havana wrong |
+| Dart `timezone` (pub.dev; the 2026f update is waiting as dart-lang/labs PR #384, open since 1 November, read 17 November) | 0.11.2 | 2026e | Havana wrong |
 | Elixir `tzdata` (Hex), as shipped | 1.2.2 | 2026d | Winnipeg and Havana wrong |
 | Perl `DateTime::TimeZone` (CPAN; read its Havana module, didn't run it) | 2.72 | 2026f | yes |
 | ICU 79.1 (`zoneinfo64.txt`; the library behind Chrome, Node and many apps) | 79.1 (22 October) | 2026e | Havana wrong |
