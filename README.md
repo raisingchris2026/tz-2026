@@ -68,7 +68,7 @@ Many tools carry their own copy of the data, so updating your operating system i
 | Go 1.27.4 (`time/tzdata`, `zoneinfo.zip`) | | 2026c | Vancouver, Edmonton, Yellowknife and Morocco right |
 | npm `moment-timezone` | 0.6.6 | 2026f | yes |
 | npm `@js-joda/timezone` | 3.2.1 | 2026f | yes |
-| npm `tzdata` | 1.0.53 | 2026f | yes |
+| npm `tzdata` | 1.0.54 (16 November; data stamp read 17 November) | 2026f | yes |
 | Rust `jiff-tzdb` 0.1.10 and 1.0.0 (what `jiff` 0.2.x and 1.0 bundle on Windows and Wasm, or with the `tzdb-bundle-always` feature; decoded the zone files in both crates 16 November) | 0.1.10 (14 November), 1.0.0 (15 November) | 2026f | yes |
 | Rust `jiff-tzdb` 0.1.9 (still in any `Cargo.lock` not updated since 14 November; `cargo update -p jiff-tzdb` fixes it) | 0.1.9 (6 October) | 2026e | Havana wrong |
 | Rust `chrono-tz` | 0.10.4 | 2025b | all eight wrong |
