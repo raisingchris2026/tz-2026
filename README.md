@@ -119,6 +119,21 @@ Many tools carry their own copy of the data, so updating your operating system i
 | C++ Boost.Date_Time `date_time_zonespec.csv` (the file you load with `tz_database::load_from_file`; one fixed rule per zone; read at the 1.92.0 and 1.93.0 beta 1 tags 15 November and worked out by script, didn't run Boost) | 1.92.0 (12 August); 1.93.0 beta 1 has the same file | 2016c (file last changed January 2018) | the six Canada and Cuba zones wrong. Casablanca and El Aaiun show the right hour in November only by luck: the file still gives them summer time (+01) from July to October. An issue to retire the file has been open since 2018 (boostorg/date_time #67). |
 | Swift Foundation `TimeZone` on Linux (and Windows, Android): the ICU data compiled into `swift-foundation-icu`; it reads only the zone's *name* from the system, never its rules, so updating the system's `tzdata` doesn't help. Pulled `zoneinfo64.res` out of the compiled-in data at main, 15 November, and ran it through ICU 76 on this machine; didn't run Swift. Same file on the 6.3.1, 6.4.2, 6.4.3 and 6.4.x branches (6.2.2 has an older one I didn't decode). Already reported, with a Swift run on 6.4.1: swiftlang/swift-foundation #2400 (3 November). Workaround from that report, which I checked only in plain ICU: put 2026f's `.res` files from `icu-data` in a folder and set `ICU_TIMEZONE_FILES_DIR` to it; with them ICU gave all eight right. | 6.4.2 (30 October) | 2025b | all eight wrong |
 
+## Is a fix on the way? (read 17 November)
+
+For the rows above that are still wrong, here's what each project has queued, read from their own trackers and source.
+
+- **Node.js:** the 2026f update is open as nodejs/node PR #67119 (since 29 October), not merged yet.
+- **Go:** not on any branch yet. The main branch and 1.27 still say 2026c; 1.26 says 2025c. An outside change (CL 855941, from GitHub PR #82699, 29 October) would bring 2026e, not 2026f, so Havana would stay wrong; it has no reviewer yet. Go updates its copy before each major release (issue #22487 is a release blocker), and Go reads the system's copy first, so most Linux and macOS machines don't use the built-in one.
+- **PHP:** the 8.4 and 8.5 branches already carry `timezonedb` 2026.6 (2026f), so the next point releases should be right.
+- **Elixir `tzdata`:** 2026f is in an open PR, lau/tzdata #194 (since 5 November), together with other changes for 1.3.0.
+- **Kotlin `kotlinx-datetime-zoneinfo`:** done; 2026f builds are out (row above).
+- **.NET in the browser:** the release branches already pin 2026f (read 15 November); not in a released pack yet.
+- **Dart `timezone`:** the 2026f update is open as dart-lang/labs PR #384 (since 1 November).
+- **Rust `tzdb_data`:** I reported it, Kijewski/tzdb #224 (16 November); no answer yet.
+- **Rust `chrono-tz`, and Polars, DataFusion, Daft through it:** nothing queued that I found. Daft knows (Eventual-Inc/Daft #7723).
+- **Deno, threetenbp:** nothing queued that I found.
+
 ## The system's own copy (Linux packages, 2026-11-12)
 
 This is what `TZ=… date`, Python's `zoneinfo`, Go, jiff, .NET and most databases read first. Which one you get depends on whether the machine takes updates, not just on its version.
