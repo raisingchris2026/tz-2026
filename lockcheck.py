@@ -330,8 +330,10 @@ def main(argv=None):
             verdict = "OK" if not r["wrong"] else (
                 "ALL EIGHT WRONG" if len(r["wrong"]) == len(FIXES)
                 else "wrong: " + ", ".join(z.split("/")[1] for z in r["wrong"]))
-            print("%s\n  %s %s (%s)  data %s  %s\n  note: %s" % (
-                r["file"], r["package"], r["version"], r["where"], r["data"], verdict, r["note"]))
+            print("%s\n  %s %s (%s)  data %s  %s" % (
+                r["file"], r["package"], r["version"], r["where"], r["data"], verdict))
+            if r["wrong"]:
+                print("  note: %s" % r["note"])
         if files and not results:
             print("Checked %d lockfile(s): none of the packages I know about." % len(files))
         if files:
