@@ -128,7 +128,7 @@ Many tools carry their own copy of the data, so updating your operating system i
 | DuckDB 1.5.6 (ran it 13 November) | 1.5.6 (28 September) | 2026d | Winnipeg and Havana wrong |
 | DuckDB 1.5.5 and older (ran 1.4.5 on 13 and 14 November, then every release from 1.4.0 to 1.5.5 on 21 November) | 1.4.5 (17 June), last of 1.4 | older than 2026b | all eight wrong |
 | ClickHouse 26.10, 26.9, 26.8 LTS, 26.3 LTS (current releases; read the data version at each tag, 13 November) | 26.10.2.103 (24 October) | 2026e | Havana wrong |
-| chDB (ClickHouse inside Python, PyPI `chdb-core`; decoded its zone files 16 November, didn't run it) | 26.11.1 (16 November) | 2026d or 2026e (Winnipeg right, Havana still on the old rule; these zones can't tell d from e) | Havana wrong |
+| chDB (ClickHouse inside Python, PyPI `chdb-core`; decoded its zone files 16 November, didn't run it) | 26.11.1 (16 November) | 2026e (Winnipeg right, Havana still on the old rule; corrected 21 November: this said "2026d or 2026e", but 2026d still has Winnipeg wrong) | Havana wrong |
 | chDB 26.9.0 (the version before; decoded 13 November) | 26.9.0 (28 September) | 2026c | Inuvik, Winnipeg and Havana wrong |
 | Haskell `tzdata` (Hackage; used by the `tz` package; decoded its zone files 13 November, didn't run it) | 0.2.20260911.0 (28 September) | 2026d (its description still says 2026c; the data and the "Release 2026d" commit say 2026d) | Winnipeg and Havana wrong |
 | R 4.6.2 (its own copy, `share/zoneinfo`; what Windows and, by default, macOS builds use; Linux builds read the system's; decoded at the tag 13 November, didn't run R) | 4.6.2 (tagged 29 October) | 2026e | Havana wrong |
