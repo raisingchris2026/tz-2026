@@ -123,8 +123,8 @@ Many tools carry their own copy of the data, so updating your operating system i
 | Perl `DateTime::TimeZone` (CPAN; read its Havana module, didn't run it) | 2.72 | 2026f | yes |
 | ICU 79.1 (`zoneinfo64.txt`; the library behind Chrome, Node and many apps) | 79.1 (22 October) | 2026e | Havana wrong |
 | ICU main branch, and the `icu-data` update files (since 29 October) | not released yet | 2026f | yes, if you patch |
-| DuckDB 2.0.0 (PyPI; ran it 13 November) | 2.0.0 (21 October) | 2026e | Havana wrong |
-| DuckDB 2.0.1 pre-release (`2.0.1.dev2611101550`, ran it 13 November) | not released yet | 2026f | yes |
+| DuckDB 2.0.1 (PyPI; ran it 21 November) | 2.0.1 (20 November) | 2026f | yes |
+| DuckDB 2.0.0 (ran it 13 November) | 2.0.0 (21 October) | 2026e | Havana wrong |
 | DuckDB 1.5.6 (ran it 13 November) | 1.5.6 (28 September) | 2026d | Winnipeg and Havana wrong |
 | DuckDB 1.4.5 (ran it 13 November, and for Vancouver 14 November) | 1.4.5 (17 June) | older than 2026b | all eight wrong |
 | ClickHouse 26.10, 26.9, 26.8 LTS, 26.3 LTS (current releases; read the data version at each tag, 13 November) | 26.10.2.103 (24 October) | 2026e | Havana wrong |
@@ -156,7 +156,7 @@ For the rows above that are still wrong, here's what each project has queued, re
 - **threetenbp:** half done. Its bot has built a commit titled "Update time zone data to 2026fgtz" on the `bot/update-tzdb` branch (newest 17 November), but the step that opens the pull request has failed every day since 28 October with "Resource not accessible by personal access token", so there's no PR and no release. The same bot in Joda-Time worked on the same day. (Read from the project's public Actions runs, 17 November.)
 - **Java 17, 21, 25 (Temurin):** done upstream, not released. The 2026f update (JDK-8396048) went into the 17u, 21u and 25u update repos between 31 October and 2 November, so the next quarterly update should be right. Java 8 and 11 already are.
 - **Chrome:** the new stable, 158.0.8127.36 (read 18 November), still pins ICU data 2026e, so Havana is still wrong there. Chromium's main source has had 2026f since 3 November, so a later stable release should fix it; I didn't check which one.
-- **DuckDB:** main has 2026f and the 2.0.1 pre-release gets all eight right, but on 17 November PyPI's newest release is still 2.0.0.
+- **DuckDB:** fixed. 2.0.1 came out on 20 November with 2026f; I ran it on 21 November and all eight zones were right.
 - **ClickHouse and chDB:** nothing queued. On 17 November no ClickHouse issue or PR mentions 2026f. The last update was a PR titled "Bump `cctz` from 2026d to 2026e" (#124249, 6 October). chDB carries ClickHouse's copy; no chDB issue mentions tz data.
 - **R:** done upstream, not released. The R 4.6 branch got 2026f on 31 October; it reaches Windows and macOS users with the next 4.6 patch release.
 - **C++ (GCC libstdc++):** done upstream, not released. The 14, 15 and 16 release branches each got "Update tzdata to 2026f" on 5 November; it ships with the next point release of each.
@@ -203,7 +203,7 @@ Notes, so you don't over-read the table:
 - **Joda-Time** always uses its own copy, like Java itself.
 - **Dart's** `timezone` package carries its own copy; 0.11.2 was published 12 October, before 2026f.
 - **Elixir's** `tzdata` checks IANA every day and downloads new data by default, so most running apps have fixed themselves. The 2026d copy matters if `autoupdate` is `:disabled`, the app can't reach the internet, or until the first poll after a restart.
-- **DuckDB** carries its own copy inside its ICU extension and ignores the system's. Its main branch has had 2026f since 29 October, and the 2.0.1 pre-release already gets all five zones I ran right (its data is newer than Vancouver's fix). The 1.5 branch's last time zone update was 2026d (22 September). `SELECT timezone('America/Havana', now());` shows what yours does.
+- **DuckDB** carries its own copy inside its ICU extension and ignores the system's. Its main branch has had 2026f since 29 October, and the 2.0.1 release (20 November) gets all eight zones right (ran it 21 November). The 1.5 branch's last time zone update was 2026d (22 September). `SELECT timezone('America/Havana', now());` shows what yours does.
 - **ClickHouse** uses only the copy built into its binary; its code says so, and it never opens the system's files. Updating the server's operating system won't help. Every current release branch carries 2026e, and on 17 November no issue or PR in ClickHouse mentioned 2026f. `SELECT toTimeZone(now(), 'America/Havana');` shows what yours does.
 - **C++ (GCC)**: `std::chrono::get_tzdb()` in libstdc++ reads `/usr/share/zoneinfo/tzdata.zi` on Linux and falls back to the copy built into the library. On macOS and other non-Linux systems the default build has no system path, so it uses only the built-in copy (on Windows it first looks for `share\zoneinfo` beside the `bin` folder that holds the DLL). `std::chrono::get_tzdb().version` shows which data you got. Clang's libc++ has no built-in copy: it reads `/usr/share/zoneinfo/tzdata.zi` (read in its source on main).
 - **MySQL and MariaDB** don't read the system's zone files when they run, and have no copy of their own. Names like `America/Havana` come from tables in the `mysql` database, which someone fills from a zoneinfo folder with `mysql_tzinfo_to_sql` (MariaDB: `mariadb-tzinfo-to-sql`). If nobody did, `CONVERT_TZ` with a name gives NULL. The tables are a snapshot: updating the system's tzdata changes nothing until you load them again and restart. I ran MariaDB 11.8.10 on 14 November: loaded from this machine's 2026e, Havana said 07:00; after loading 2026f it still said 07:00 until I restarted the server, then 08:00. MariaDB's docs also say to restart.
